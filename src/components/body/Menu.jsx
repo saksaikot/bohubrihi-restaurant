@@ -2,16 +2,18 @@ import React, { Component } from "react";
 import dishesData from "../../datas/dishes";
 import MenuItem from "./MenuItem";
 import DishDetails from "./DishDetails";
+import { Modal, ModalBody, ModalFooter, Button, CardColumns } from "reactstrap";
 class Menu extends Component {
   state = {
     dishes: dishesData,
     selectedDish: null,
+    modalOpen: false,
   };
   render() {
-    const { dishes, selectedDish } = this.state;
+    const { dishes, selectedDish, modalOpen } = this.state;
     return (
-      <div className="row">
-        <div className="col-6">
+      <div className="container">
+        <div className="row">
           {dishes.map((dish) => (
             <MenuItem
               dish={dish}
@@ -19,15 +21,29 @@ class Menu extends Component {
               handleDishClick={() => this.handleDishClick(dish)}
             />
           ))}
-        </div>
-        <div className="col-6">
-          {selectedDish && <DishDetails details={selectedDish} />}
+          <Modal isOpen={modalOpen} onClick={this.handleModalToggle.bind(this)}>
+            <ModalBody>
+              {selectedDish && <DishDetails details={selectedDish} />}
+            </ModalBody>
+            <ModalFooter>
+              <Button
+                color="primary"
+                onClick={this.handleModalToggle.bind(this)}
+              >
+                Close
+              </Button>
+            </ModalFooter>
+          </Modal>
         </div>
       </div>
     );
   }
   handleDishClick(selectedDish) {
     this.setState({ selectedDish });
+    this.handleModalToggle();
+  }
+  handleModalToggle() {
+    this.setState({ modalOpen: !this.state.modalOpen });
   }
 }
 

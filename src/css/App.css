@@ -7,3 +7,6 @@
 .cursor{
   cursor: pointer
 }
+.sticky{
+  z-index: 111;
+}

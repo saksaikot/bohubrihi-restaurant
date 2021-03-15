@@ -5,7 +5,7 @@ export default function MenuItem(props) {
   const { dish, handleDishClick } = props;
   const { image, name } = dish;
   return (
-    <div>
+    <div className="col-md-4">
       <Card className="mx-auto my-3 cursor" onClick={handleDishClick}>
         <CardBody>
           <CardImg width="100%" src={image} alt="name" />
