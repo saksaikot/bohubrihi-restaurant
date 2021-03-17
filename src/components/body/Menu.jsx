@@ -22,7 +22,7 @@ const storeToProps = (state) => ({
 class Menu extends Component {
   constructor(props) {
     super(props);
-    setTimeout(() => dishStore.load(DISHES), 1500);
+    setTimeout(() => dishStore.load(DISHES), 3000);
     dishStore.loading();
   }
   state = {
@@ -36,7 +36,35 @@ class Menu extends Component {
   }
   render() {
     document.title = "Menu";
-    if (this.props.dishLoading) return <Loading />;
+    if (this.props.dishLoading)
+      return (
+        <div className="d-flex">
+          <div className="ssc ssc-card" style={{ maxWidth: "30%" }}>
+            <div className="ssc-wrapper">
+              <div className="ssc-square mb"></div>
+              <div className="flex align-center justify-between">
+                <div className="ssc-head-line w-100"></div>
+              </div>
+            </div>
+          </div>
+          <div className="ssc ssc-card" style={{ maxWidth: "30%" }}>
+            <div className="ssc-wrapper">
+              <div className="ssc-square mb"></div>
+              <div className="flex align-center justify-between">
+                <div className="ssc-head-line w-100"></div>
+              </div>
+            </div>
+          </div>
+          <div className="ssc ssc-card" style={{ maxWidth: "30%" }}>
+            <div className="ssc-wrapper">
+              <div className="ssc-square mb"></div>
+              <div className="flex align-center justify-between">
+                <div className="ssc-head-line w-100"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
 
     const { selectedDish, modalOpen } = this.state;
     const { dishes, comments } = this.props;
