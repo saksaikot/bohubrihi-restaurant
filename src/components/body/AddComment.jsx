@@ -3,14 +3,13 @@ import { Form, Input, Button } from "reactstrap";
 import { connect } from "react-redux";
 import autoBind from "class-autobind";
 
-// const dispatchToProps(dispatch=>(
-//   {
-//     addComment:({author,rating,comment,dishId})=>({
-//       type:'ADD_COMMENT',
-//       payload:{author,rating,comment,dishId}
-//     })
-//   }
-// ));
+const dispatchToProps = (dispatch) => ({
+  addComment: ({ author, rating, comment, dishId }) =>
+    dispatch({
+      type: "ADD_COMMENT",
+      payload: { author, rating, comment, dishId },
+    }),
+});
 
 class AddComment extends Component {
   constructor(props) {
@@ -28,15 +27,11 @@ class AddComment extends Component {
     e.preventDefault();
     this.setState(this.initState());
 
-    const comment = {
-      ...this.state,
-      date: new Date().toString(),
-      dishId: this.props.dishId,
-    };
-    this.props.dispatch({
-      type: "ADD_COMMENT",
-      payload: comment,
-    });
+    // const comment = {
+    //   ...this.state,
+    //   dishId: this.props.dishId,
+    // };
+    this.props.addComment({ ...this.state, dishId: this.props.dishId });
   };
   handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -88,4 +83,4 @@ class AddComment extends Component {
   }
 }
 
-export default connect()(AddComment);
+export default connect(null, dispatchToProps)(AddComment);

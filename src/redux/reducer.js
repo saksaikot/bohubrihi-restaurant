@@ -10,6 +10,7 @@ export const reducer = (state = initialState, action) => {
   console.log("reducer", state, action);
   if (action.type === "ADD_COMMENT") {
     const newComment = action.payload;
+    newComment.date = new Date().toString();
     newComment.id = state.comments.length;
 
     return { ...state, comments: [...state.comments, newComment] };
