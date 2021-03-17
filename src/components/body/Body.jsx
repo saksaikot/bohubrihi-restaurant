@@ -1,19 +1,29 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, withRouter } from "react-router-dom";
 import About from "./About";
 import Contact from "./Contact";
 import Home from "./Home";
 import Menu from "./Menu";
 
-export default function Body() {
+function Body(props) {
+  React.useEffect(() => {
+    document.title = props.location.pathname;
+  });
   return (
     <div className="container">
-      <Route path="/menu" exact render={() => <Menu />} />
+      <Route path="/menu" exact render={() => <Menu />} title="Menu page" />
       <Route path="/" exact render={() => <Home />} />
 
-      <Route path="/about" exact render={() => <About />} />
+      <Route path="/about" exact render={() => <About />} title="About page" />
 
-      <Route path="/contact" exact render={() => <Contact />} />
+      <Route
+        path="/contact"
+        exact
+        render={() => <Contact />}
+        title="Menu page"
+      />
     </div>
   );
 }
+
+export default withRouter(Body);

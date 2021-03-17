@@ -1,16 +1,32 @@
-import React, { Component } from "react";
-import dishesData from "../../datas/dishes";
+import React, { Component, useEffect } from "react";
+// import DISHES from "../../datas/dishes";
+// import COMMENTS from "../../datas/comments";
+
 import MenuItem from "./MenuItem";
 import DishDetails from "./DishDetails";
 import { Modal, ModalBody, ModalFooter, Button, CardColumns } from "reactstrap";
+import { connect } from "react-redux";
+import AddComment from "./AddComment";
+
+const storeToProps = (state) => ({
+  dishes: state.dishes,
+  comments: state.comments,
+});
+
 class Menu extends Component {
   state = {
-    dishes: dishesData,
+    // dishes: DISHES,
+    // comments: COMMENTS,
     selectedDish: null,
     modalOpen: false,
   };
+  componentDidMount() {
+    console.log(this.props, "Menu");
+  }
   render() {
-    const { dishes, selectedDish, modalOpen } = this.state;
+    document.title = "Menu";
+    const { selectedDish, modalOpen } = this.state;
+    const { dishes, comments } = this.props;
     return (
       <div className="container">
         <div className="row">
@@ -21,9 +37,19 @@ class Menu extends Component {
               handleDishClick={() => this.handleDishClick(dish)}
             />
           ))}
-          <Modal isOpen={modalOpen} onClick={this.handleModalToggle.bind(this)}>
+          <Modal
+            backdrop={true}
+            isOpen={modalOpen}
+            toggle={this.handleModalToggle.bind(this)}
+          >
             <ModalBody>
-              {selectedDish && <DishDetails details={selectedDish} />}
+              {selectedDish && (
+                <div>
+                  <DishDetails dish={selectedDish} comments={comments} />
+                  <hr />
+                  <AddComment dishId={selectedDish.id}></AddComment>
+                </div>
+              )}
             </ModalBody>
             <ModalFooter>
               <Button
@@ -47,4 +73,4 @@ class Menu extends Component {
   }
 }
 
-export default Menu;
+export default connect(storeToProps)(Menu);

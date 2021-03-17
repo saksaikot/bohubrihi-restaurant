@@ -3,7 +3,8 @@ import { Card, CardBody, CardTitle, CardImg } from "reactstrap";
 import Comment from "./Comment";
 
 export default function DishDetails(props) {
-  const { name, image, price, description, comments } = props.details;
+  const { name, image, price, description, id } = props.dish;
+  const comments = props.comments.filter((comment) => comment.dishId === id);
   return (
     <Card className="mx-auto my-3">
       <CardImg top src={image} alt={name} />
@@ -21,4 +22,3 @@ export default function DishDetails(props) {
     </Card>
   );
 }
- 
