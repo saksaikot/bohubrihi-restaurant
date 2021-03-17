@@ -1,10 +1,9 @@
-import React, { Component, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { Component } from "react";
+import {  NavLink } from "react-router-dom";
 import {
   Collapse,
   Navbar,
   NavbarToggler,
-  NavbarBrand,
   Nav,
   NavItem,
 } from "reactstrap";

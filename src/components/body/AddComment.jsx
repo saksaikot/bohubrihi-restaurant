@@ -1,15 +1,6 @@
 import React, { Component } from "react";
 import { Form, Input, Button } from "reactstrap";
-import { connect } from "react-redux";
 import autoBind from "class-autobind";
-
-const dispatchToProps = (dispatch) => ({
-  addComment: ({ author, rating, comment, dishId }) =>
-    dispatch({
-      type: "ADD_COMMENT",
-      payload: { author, rating, comment, dishId },
-    }),
-});
 
 class AddComment extends Component {
   constructor(props) {
@@ -83,4 +74,4 @@ class AddComment extends Component {
   }
 }
 
-export default connect(null, dispatchToProps)(AddComment);
+export default AddComment;
