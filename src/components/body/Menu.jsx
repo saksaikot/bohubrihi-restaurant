@@ -1,16 +1,18 @@
 import React, { Component } from "react";
-// import DISHES from "../../datas/dishes";
+import DISHES from "../../datas/dishes";
 // import COMMENTS from "../../datas/comments";
-
 import MenuItem from "./MenuItem";
 import DishDetails from "./DishDetails";
 import { Modal, ModalBody, ModalFooter, Button } from "reactstrap";
 import { connect } from "react-redux";
 import AddComment from "./AddComment";
+import { dishStore } from "../../redux/actionCreators";
+import Loading from "./Loading";
 // import { addComment } from "../../redux/actionCreators";
 
 const storeToProps = (state) => ({
-  dishes: state.dishes,
+  dishes: state.dishes.dishes,
+  dishLoading: state.dishes.dishLoading,
   comments: state.comments,
 });
 // const dispatchToProps = (dispatch) => ({
@@ -18,6 +20,11 @@ const storeToProps = (state) => ({
 //     addComment(comments,dispatch),
 // });
 class Menu extends Component {
+  constructor(props) {
+    super(props);
+    setTimeout(() => dishStore.load(DISHES), 1500);
+    dishStore.loading();
+  }
   state = {
     // dishes: DISHES,
     // comments: COMMENTS,
@@ -29,6 +36,8 @@ class Menu extends Component {
   }
   render() {
     document.title = "Menu";
+    if (this.props.dishLoading) return <Loading />;
+
     const { selectedDish, modalOpen } = this.state;
     const { dishes, comments } = this.props;
     return (

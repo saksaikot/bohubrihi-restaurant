@@ -13,3 +13,17 @@ export const commentStore = bindActionCreators(
   },
   myStore.dispatch
 );
+
+const dishLoading = () => ({ type: actionTypes.DISHES_LOADING });
+const loadDishes = (dishes) => ({
+  type: actionTypes.LOAD_DISHES,
+  payload: dishes,
+});
+
+export const dishStore = bindActionCreators(
+  {
+    loading: dishLoading,
+    load: loadDishes,
+  },
+  myStore.dispatch
+);

@@ -1,11 +1,16 @@
 import { combineReducers } from "redux";
 import COMMENTS from "../datas/comments";
-import DISHES from "../datas/dishes";
+// import DISHES from "../datas/dishes";
 import * as actionType from "./actionTypes";
 
-const dishReducer = (dishState = DISHES, action) => {
+const dishReducer = (dishState = { dishLoading: false, dishes: [] }, action) => {
   const { type, payload } = action;
   switch (type) {
+    case actionType.DISHES_LOADING:
+      return { ...dishState, dishLoading: true, dishes: [] };
+    case actionType.LOAD_DISHES:
+      return { ...dishState, dishLoading: false, dishes: payload };
+
     default:
       return dishState;
   }
