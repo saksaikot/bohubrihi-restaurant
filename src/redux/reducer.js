@@ -1,19 +1,23 @@
+import { combineReducers } from "redux";
 import COMMENTS from "../datas/comments";
 import DISHES from "../datas/dishes";
 
-const initialState = {
-  dishes: DISHES,
-  comments: COMMENTS,
+const dishReducer = (dishState = DISHES, action) => {
+  return dishState;
 };
 
-export const reducer = (state = initialState, action) => {
-  console.log("reducer", state, action);
+const commentReducer = (commentState = COMMENTS, action) => {
   if (action.type === "ADD_COMMENT") {
     const newComment = action.payload;
     newComment.date = new Date().toString();
-    newComment.id = state.comments.length;
+    newComment.id = commentState.length;
 
-    return { ...state, comments: [...state.comments, newComment] };
+    return [...commentState, newComment];
   }
-  return state;
+  return commentState;
 };
+
+export const reducer = combineReducers({
+  dishes: dishReducer,
+  comments: commentReducer,
+});
