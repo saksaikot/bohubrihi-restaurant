@@ -17,12 +17,8 @@ class AddComment extends Component {
   handleOnsubmit = (e) => {
     e.preventDefault();
     this.setState(this.initState());
-
-    // const comment = {
-    //   ...this.state,
-    //   dishId: this.props.dishId,
-    // };
-    this.props.addComment({ ...this.state, dishId: this.props.dishId });
+    const comment = { ...this.state, dishId: this.props.dishId };
+    this.props.addComment(comment);
   };
   handleOnChange = (e) => {
     const { name, value } = e.target;
