@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Form, Input, Button } from "reactstrap";
 import autoBind from "class-autobind";
+import { commentStore } from "../../redux/actionCreators";
 
 class AddComment extends Component {
   constructor(props) {
@@ -18,7 +19,7 @@ class AddComment extends Component {
     e.preventDefault();
     this.setState(this.initState());
     const comment = { ...this.state, dishId: this.props.dishId };
-    this.props.addComment(comment);
+    commentStore.add(comment);
   };
   handleOnChange = (e) => {
     const { name, value } = e.target;

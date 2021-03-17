@@ -1,7 +1,15 @@
+import { bindActionCreators } from "redux";
 import * as actionTypes from "./actionTypes";
+import { myStore } from "./store";
 
-export const addComment = (comments, dispatch) =>
-  dispatch({
-    type: actionTypes.ADD_COMMENT,
-    payload: comments,
-  });
+const addComment = (comments) => ({
+  type: actionTypes.ADD_COMMENT,
+  payload: comments,
+});
+
+export const commentStore = bindActionCreators(
+  {
+    add: addComment,
+  },
+  myStore.dispatch
+);

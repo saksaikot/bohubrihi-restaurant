@@ -7,16 +7,16 @@ import DishDetails from "./DishDetails";
 import { Modal, ModalBody, ModalFooter, Button } from "reactstrap";
 import { connect } from "react-redux";
 import AddComment from "./AddComment";
-import { addComment } from "../../redux/actionCreators";
+// import { addComment } from "../../redux/actionCreators";
 
 const storeToProps = (state) => ({
   dishes: state.dishes,
   comments: state.comments,
 });
-const dispatchToProps = (dispatch) => ({
-  addComment: comments =>
-    addComment(comments,dispatch),
-});
+// const dispatchToProps = (dispatch) => ({
+//   addComment: comments =>
+//     addComment(comments,dispatch),
+// });
 class Menu extends Component {
   state = {
     // dishes: DISHES,
@@ -30,7 +30,7 @@ class Menu extends Component {
   render() {
     document.title = "Menu";
     const { selectedDish, modalOpen } = this.state;
-    const { dishes, comments, addComment } = this.props;
+    const { dishes, comments } = this.props;
     return (
       <div className="container">
         <div className="row">
@@ -52,7 +52,7 @@ class Menu extends Component {
                   <DishDetails dish={selectedDish} comments={comments} />
                   <hr />
                   <AddComment
-                    addComment={addComment}
+                    // addComment={addComment}
                     dishId={selectedDish.id}
                   ></AddComment>
                 </div>
@@ -80,4 +80,4 @@ class Menu extends Component {
   }
 }
 
-export default connect(storeToProps, dispatchToProps)(Menu);
+export default connect(storeToProps)(Menu);
