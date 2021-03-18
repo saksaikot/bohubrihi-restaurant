@@ -6,68 +6,34 @@ import DishDetails from "./DishDetails";
 import { Modal, ModalBody, ModalFooter, Button } from "reactstrap";
 import { connect } from "react-redux";
 import AddComment from "./AddComment";
-import { dishStore } from "../../redux/actionCreators";
+import { dishStore, commentStore } from "../../redux/actionCreators";
 import Loading from "./Loading";
 // import { addComment } from "../../redux/actionCreators";
 
-const storeToProps = (state) => ({
+const mapStateToProps = (state) => ({
   dishes: state.dishes.dishes,
   dishLoading: state.dishes.dishLoading,
   comments: state.comments,
 });
-// const dispatchToProps = (dispatch) => ({
-//   addComment: comments =>
-//     addComment(comments,dispatch),
-// });
+const mapDispatchToProps = (dispatch) => ({
+  ...dishStore(dispatch),
+  ...commentStore(dispatch),
+});
 class Menu extends Component {
-  constructor(props) {
-    super(props);
-    setTimeout(() => dishStore.load(DISHES), 3000);
-    dishStore.loading();
-  }
   state = {
-    // dishes: DISHES,
-    // comments: COMMENTS,
     selectedDish: null,
     modalOpen: false,
   };
   componentDidMount() {
-    console.log(this.props, "Menu");
+    this.props.fetchDishes(DISHES);
   }
   render() {
     document.title = "Menu";
-    if (this.props.dishLoading)
-      return (
-        <div className="d-flex">
-          <div className="ssc ssc-card" style={{ maxWidth: "30%" }}>
-            <div className="ssc-wrapper">
-              <div className="ssc-square mb"></div>
-              <div className="flex align-center justify-between">
-                <div className="ssc-head-line w-100"></div>
-              </div>
-            </div>
-          </div>
-          <div className="ssc ssc-card" style={{ maxWidth: "30%" }}>
-            <div className="ssc-wrapper">
-              <div className="ssc-square mb"></div>
-              <div className="flex align-center justify-between">
-                <div className="ssc-head-line w-100"></div>
-              </div>
-            </div>
-          </div>
-          <div className="ssc ssc-card" style={{ maxWidth: "30%" }}>
-            <div className="ssc-wrapper">
-              <div className="ssc-square mb"></div>
-              <div className="flex align-center justify-between">
-                <div className="ssc-head-line w-100"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      );
+    console.log("menu rendering ", this.props);
+    if (this.props.dishLoading) return <Loading />;
 
     const { selectedDish, modalOpen } = this.state;
-    const { dishes, comments } = this.props;
+    const { dishes, comments, addComment } = this.props;
     return (
       <div className="container">
         <div className="row">
@@ -89,7 +55,7 @@ class Menu extends Component {
                   <DishDetails dish={selectedDish} comments={comments} />
                   <hr />
                   <AddComment
-                    // addComment={addComment}
+                    addComment={addComment}
                     dishId={selectedDish.id}
                   ></AddComment>
                 </div>
@@ -117,4 +83,4 @@ class Menu extends Component {
   }
 }
 
-export default connect(storeToProps)(Menu);
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
