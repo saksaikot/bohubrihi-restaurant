@@ -48,6 +48,7 @@ class Menu extends Component {
             backdrop={true}
             isOpen={modalOpen}
             toggle={this.handleModalToggle.bind(this)}
+            fade={false}
           >
             <ModalBody>
               {selectedDish && (

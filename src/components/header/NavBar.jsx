@@ -1,12 +1,6 @@
 import React, { Component } from "react";
-import {  NavLink } from "react-router-dom";
-import {
-  Collapse,
-  Navbar,
-  NavbarToggler,
-  Nav,
-  NavItem,
-} from "reactstrap";
+import { NavLink } from "react-router-dom";
+import { Collapse, Navbar, NavbarToggler, Nav, NavItem } from "reactstrap";
 import Sticky from "react-sticky-el";
 export default class NavBar extends Component {
   // const [collapsed, setCollapsed] = useState(true);
@@ -42,6 +36,11 @@ export default class NavBar extends Component {
                 <NavItem>
                   <NavLink to="/contact" className="nav-link">
                     Contact
+                  </NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink to="/contact-redux" className="nav-link">
+                    Contact Redux
                   </NavLink>
                 </NavItem>
               </Nav>

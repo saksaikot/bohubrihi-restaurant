@@ -1,9 +1,13 @@
+import { createForms } from "react-redux-form";
 import { combineReducers } from "redux";
 import COMMENTS from "../datas/comments";
 // import DISHES from "../datas/dishes";
 import * as actionType from "./actionTypes";
-
-const dishReducer = (dishState = { dishLoading: false, dishes: [] }, action) => {
+import { initialContactForm } from "./forms";
+const dishReducer = (
+  dishState = { dishLoading: false, dishes: [] },
+  action
+) => {
   const { type, payload } = action;
   switch (type) {
     case actionType.DISHES_LOADING:
@@ -33,4 +37,7 @@ const commentReducer = (commentState = COMMENTS, action) => {
 export const reducer = combineReducers({
   dishes: dishReducer,
   comments: commentReducer,
+  ...createForms({
+    contact: initialContactForm,
+  }),
 });
