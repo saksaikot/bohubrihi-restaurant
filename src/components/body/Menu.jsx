@@ -1,23 +1,24 @@
 import React, { Component } from "react";
-import DISHES from "../../datas/dishes";
+// import DISHES from "../../datas/dishes";
 // import COMMENTS from "../../datas/comments";
 import MenuItem from "./MenuItem";
 import DishDetails from "./DishDetails";
 import { Modal, ModalBody, ModalFooter, Button } from "reactstrap";
 import { connect } from "react-redux";
 import AddComment from "./AddComment";
-import { dishStore, commentStore } from "../../redux/actionCreators";
+// import { dishStore, commentStore } from "../../redux/actionCreators";
 import Loading from "./Loading";
+import { commentsActions } from "../../redux/actionCreators/commentsActions";
+import { dishesActions } from "../../redux/actionCreators/dishesActions";
 // import { addComment } from "../../redux/actionCreators";
 
 const mapStateToProps = (state) => ({
-  dishes: state.dishes.dishes,
-  dishLoading: state.dishes.dishLoading,
-  comments: state.comments,
+  dishesProps: state.dishes,
+  commentsProps: state.comments,
 });
 const mapDispatchToProps = (dispatch) => ({
-  ...dishStore(dispatch),
-  ...commentStore(dispatch),
+  ...commentsActions(dispatch),
+  ...dishesActions(dispatch),
 });
 class Menu extends Component {
   state = {
@@ -25,15 +26,20 @@ class Menu extends Component {
     modalOpen: false,
   };
   componentDidMount() {
-    this.props.fetchDishes(DISHES);
+    this.props.dishesActions.fetchDishes();
   }
   render() {
-    document.title = "Menu";
-    console.log("menu rendering ", this.props);
-    if (this.props.dishLoading) return <Loading />;
-
     const { selectedDish, modalOpen } = this.state;
-    const { dishes, comments, addComment } = this.props;
+
+    const { dishLoading, dishes, loadDishesError } = this.props.dishesProps;
+
+    // const { comments } = this.props.commentsProps;
+    const { commentsActions, commentsProps } = this.props;
+
+    if (dishLoading) return <Loading />;
+    if (loadDishesError) {
+      return <h3 className="text-center m-5 p-5 ">Dish loading failed</h3>;
+    }
     return (
       <div className="container">
         <div className="row">
@@ -53,11 +59,17 @@ class Menu extends Component {
             <ModalBody>
               {selectedDish && (
                 <div>
-                  <DishDetails dish={selectedDish} comments={comments} />
+                  <DishDetails
+                    dish={selectedDish}
+                    commentsProps={commentsProps}
+                  />
                   <hr />
                   <AddComment
-                    addComment={addComment}
+                    addComment={commentsActions.addComment}
+                    comments={commentsProps.comments}
+                    addError={commentsProps.addError}
                     dishId={selectedDish.id}
+                    fieldReset={commentsProps.fieldReset}
                   ></AddComment>
                 </div>
               )}
@@ -76,6 +88,7 @@ class Menu extends Component {
     );
   }
   handleDishClick(selectedDish) {
+    this.props.commentsActions.fetchComments();
     this.setState({ selectedDish });
     this.handleModalToggle();
   }

@@ -50,7 +50,7 @@ class ContactRedux extends Component {
     // this.props.resetContactForm();
   }
   render() {
-    const { handleOnSubmit, inputGenerator } = this;
+    const { handleOnSubmit } = this;
     return (
       <div className="container">
         <div className="row row-content m-2">
